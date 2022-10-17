@@ -5,11 +5,13 @@ import java.util.List;
 public class App {
     public static void main(String[] args) throws InterruptedException {
         List<List<Integer>> screen = new ArrayList<>();
+        List<List<Integer>> screenDataCopy = new ArrayList<>();
         int INITIAL_SIZE = 4;
         for (int i = 0; i < INITIAL_SIZE; i++) {
             Integer[] tempArr =new Integer[INITIAL_SIZE];
             Arrays.fill(tempArr,0);
-            screen.add(Arrays.asList(tempArr));
+            screen.add(new ArrayList<>(Arrays.asList(tempArr)));
+            screenDataCopy.add(Arrays.asList(tempArr));
         }
         screen.get(1).set(1, 1);
         screen.get(1).set(2, 1);
@@ -24,9 +26,7 @@ public class App {
 //            System.out.flush();
 //            Thread.sleep(1000);
 //        }
-        List<List<Integer>> screenDataCopy = new ArrayList<>();
-        for(List<Integer>i:screen)
-            screenDataCopy.add(new ArrayList<>(i));
+
         for (int i = 0; i < screenDataCopy.size(); i++) {
             for (int j = 0; j < screenDataCopy.get(i).size(); j++) {
                 if (screen.get(i).get(j) == 1) {
@@ -34,8 +34,8 @@ public class App {
                     int left, top, right, down;
                     left = j - 1;
                     right = j + 1;
-                    top = i - 1;
-                    down = i + 1;
+                    top = i;
+                    down = i;
                     System.out.println(i+","+j);
                     if (left >= 0)
                         screenDataCopy.get(i).set(left, screenDataCopy.get(i).get(left) + 1);
@@ -45,11 +45,11 @@ public class App {
                         screenDataCopy.get(i).set(right, screenDataCopy.get(i).get(right) + 1);
                     System.out.println(screen+"\t\t"+screenDataCopy);
                     System.out.println();
-                    if (top >= 0)
+                    if (i-1 >= 0)
                         screenDataCopy.get(i-1).set(top, screenDataCopy.get(i-1).get(top) + 1);
                     System.out.println(screen+"\t\t"+screenDataCopy);
                     System.out.println();
-                    if (down < INITIAL_SIZE)
+                    if (i+1 < INITIAL_SIZE)
                         screenDataCopy.get(i+1).set(down, screenDataCopy.get(i+1).get(down) + 1);
                     System.out.println(screen+"\t\t"+screenDataCopy);
                     System.out.println("---------------------------------------------------");
