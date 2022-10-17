@@ -1,4 +1,5 @@
 import services.matrixProcessing.MatrixManipulationService;
+import services.visual.ConsolePrinterService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +20,13 @@ public class App {
         screen.get(3).set(0, 1);
 
         MatrixManipulationService matrixManipulationService=new MatrixManipulationService(INITIAL_SIZE);
-        matrixManipulationService.getNextState(screen);
+
+        for (int i = 0; i < 10; i++) {
+            screen=matrixManipulationService.getNextScreenState(screen);
+            ConsolePrinterService.cleanScreen();
+            ConsolePrinterService.printScreen(screen);
+
+        }
 
 //        for (int i = 0; i < 10; i++) {
 //

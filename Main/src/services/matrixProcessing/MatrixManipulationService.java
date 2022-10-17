@@ -9,17 +9,22 @@ public class MatrixManipulationService {
     List<List<Integer>> screenDataCopy;
     public MatrixManipulationService(int size){
         this.initialSize=size;
-        setInitialNeighbourState();
+        screenDataCopy=getZeroes2dList();
     }
-    public void setInitialNeighbourState()
-    {
-        screenDataCopy=new ArrayList<>();
+
+
+    public List<List<Integer>> getZeroes2dList(){
+        List<List<Integer>> temporaryZeroesList=new ArrayList<>();
         for (int i = 0; i < initialSize; i++) {
             Integer[] tempArr =new Integer[initialSize];
             Arrays.fill(tempArr,0);
-            screenDataCopy.add(new ArrayList<>(Arrays.asList(tempArr)));
+            temporaryZeroesList.add(new ArrayList<>(Arrays.asList(tempArr)));
         }
+        return new ArrayList<>(temporaryZeroesList);
+    }
 
+    public void setScreenDataCopyToInitial(){
+        screenDataCopy=getZeroes2dList();
     }
 
     public List<List<Integer>> getNextState(List<List<Integer>> currentState){
@@ -60,19 +65,32 @@ public class MatrixManipulationService {
             }
         }
 
-        for(List<Integer> i:currentState)
-            System.out.println(i);
-        System.out.println("---------------------");
-        for(List<Integer> i:screenDataCopy)
-            System.out.println(i);
+//        for(List<Integer> i:currentState)
+//            System.out.println(i);
+//        System.out.println("---------------------");
+//        for(List<Integer> i:screenDataCopy)
+//            System.out.println(i);
         return screenDataCopy;
     }
-
-    public void updateCell(int row, int column){
-
+    public List<List<Integer>> getNextScreenState(List<List<Integer>> currentState){
+        List<List<Integer>> neighbourState=getNextState(currentState);
+        setScreenDataCopyToInitial();
+        List<List<Integer>> newScreenState=getZeroes2dList();
+        for(int i=0;i<neighbourState.size();i++){
+            for(int j=0;j<neighbourState.get(i).size();j++){
+                int element=neighbourState.get(i).get(j);
+                if(element<=1||element>=4)
+                    newScreenState.get(i).set(j,0);
+                if (element==2 && currentState.get(i).get(j)==1)
+                    newScreenState.get(i).set(j,1);
+                if(element==3)
+                    newScreenState.get(i).set(j,1);
+            }
+        }
+        return newScreenState;
     }
+    public List<List<Integer>> expandBoundaries(){
 
-    public void setNewState(List<List<Integer>> currentState, List<List<Integer>> newState){
-
+        return null;
     }
 }
