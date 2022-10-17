@@ -17,7 +17,7 @@ public class App {
         screen.get(1).set(2, 1);
         screen.get(2).set(1, 1);
         screen.get(3).set(0, 1);
-        System.out.println(screen);
+
 //        for (int i = 0; i < 10; i++) {
 //
 //            System.out.println(screen);
@@ -34,27 +34,31 @@ public class App {
                     int left, top, right, down;
                     left = j - 1;
                     right = j + 1;
-                    top = i;
-                    down = i;
-                    System.out.println(i+","+j);
+                    top = i-1;
+                    down = i+1;
                     if (left >= 0)
                         screenDataCopy.get(i).set(left, screenDataCopy.get(i).get(left) + 1);
-                    System.out.println(screen+"\t\t"+screenDataCopy);
-                    System.out.println();
+
                     if (right < INITIAL_SIZE)
                         screenDataCopy.get(i).set(right, screenDataCopy.get(i).get(right) + 1);
-                    System.out.println(screen+"\t\t"+screenDataCopy);
-                    System.out.println();
-                    if (i-1 >= 0)
-                        screenDataCopy.get(i-1).set(top, screenDataCopy.get(i-1).get(top) + 1);
-                    System.out.println(screen+"\t\t"+screenDataCopy);
-                    System.out.println();
-                    if (i+1 < INITIAL_SIZE)
-                        screenDataCopy.get(i+1).set(down, screenDataCopy.get(i+1).get(down) + 1);
-                    System.out.println(screen+"\t\t"+screenDataCopy);
-                    System.out.println("---------------------------------------------------");
 
+                    if (top>= 0)
+                        screenDataCopy.get(top).set(j, screenDataCopy.get(top).get(j) + 1);
 
+                    if (down < INITIAL_SIZE)
+                        screenDataCopy.get(down).set(j, screenDataCopy.get(down).get(j) + 1);
+
+                    if (top >= 0 && left >=0)
+                        screenDataCopy.get(top).set(left, screenDataCopy.get(top).get(left) + 1);
+
+                    if (top >= 0 && right<INITIAL_SIZE)
+                        screenDataCopy.get(top).set(right, screenDataCopy.get(top).get(right) + 1);
+
+                    if (down < INITIAL_SIZE && left >=0)
+                        screenDataCopy.get(down).set(left, screenDataCopy.get(down).get(left) + 1);
+
+                    if (down < INITIAL_SIZE && right <INITIAL_SIZE)
+                        screenDataCopy.get(down).set(right, screenDataCopy.get(down).get(right) + 1);
                 }
             }
         }
