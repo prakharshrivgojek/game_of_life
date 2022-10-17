@@ -1,44 +1,37 @@
 import services.matrixProcessing.MatrixManipulationService;
-import services.visual.ConsolePrinterService;
+import services.ui.ConsolePrinterService;
+import services.ui.interfaces.Printer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class App {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         List<List<Integer>> screen = new ArrayList<>();
-        int INITIAL_SIZE = 4;
+        int INITIAL_SIZE = 5;
         for (int i = 0; i < INITIAL_SIZE; i++) {
-            Integer[] tempArr =new Integer[INITIAL_SIZE];
-            Arrays.fill(tempArr,0);
-            screen.add(new ArrayList<>(Arrays.asList(tempArr)));
+            Integer[] zeroes = new Integer[INITIAL_SIZE];
+            Arrays.fill(zeroes, 0);
+            screen.add(new ArrayList<>(Arrays.asList(zeroes)));
         }
         screen.get(1).set(0, 1);
-        screen.get(1).set(1, 1);
-        screen.get(2).set(1, 1);
-        screen.get(2).set(2, 1);
+        screen.get(2).set(0, 1);
         screen.get(3).set(0, 1);
+//        screen.get(4).set(3, 1);
+//        screen.get(1).set(4, 1);
 
-        MatrixManipulationService matrixManipulationService=new MatrixManipulationService(INITIAL_SIZE);
-
+        MatrixManipulationService matrixManipulationService = new MatrixManipulationService(INITIAL_SIZE);
+        Printer printer=new ConsolePrinterService();
+        printer.printScreen(screen);
+        printer.cleanScreen();
         for (int i = 0; i < 100; i++) {
-            screen=matrixManipulationService.expandBoundaries(screen);
-            screen=matrixManipulationService.getNextScreenState(screen);
-            ConsolePrinterService.cleanScreen();
-            ConsolePrinterService.printScreen(screen);
+            System.out.println("iteration:"+ (i+1));
+            screen = matrixManipulationService.expandBoundaries(screen);
+            screen = matrixManipulationService.getNextScreenState(screen);
+            printer.printScreen(screen);
+            printer.cleanScreen();
 
         }
-
-//        for (int i = 0; i < 10; i++) {
-//
-//            System.out.println(screen);
-//            Thread.sleep(2000);
-//            System.out.print("\033[H\033[2J");
-//            System.out.flush();
-//            Thread.sleep(1000);
-//        }
-
-
     }
 }
