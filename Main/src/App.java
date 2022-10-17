@@ -14,14 +14,16 @@ public class App {
             Arrays.fill(tempArr,0);
             screen.add(new ArrayList<>(Arrays.asList(tempArr)));
         }
+        screen.get(1).set(0, 1);
         screen.get(1).set(1, 1);
-        screen.get(1).set(2, 1);
         screen.get(2).set(1, 1);
+        screen.get(2).set(2, 1);
         screen.get(3).set(0, 1);
 
         MatrixManipulationService matrixManipulationService=new MatrixManipulationService(INITIAL_SIZE);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
+            screen=matrixManipulationService.expandBoundaries(screen);
             screen=matrixManipulationService.getNextScreenState(screen);
             ConsolePrinterService.cleanScreen();
             ConsolePrinterService.printScreen(screen);
